@@ -1,0 +1,23 @@
+{
+  "name": "autotracks_api",
+  "version": "1.0.0",
+  "description": "API for Autotracks web appland mobile application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENVIRONMENT=production node server",
+    "dev": "nodemon server"
+  },
+  "author": "Cedrik Dubois",
+  "license": "ISC",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
+}
