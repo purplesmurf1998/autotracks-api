@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const colors = require('colors');
 const cors = require('cors');
 const morgan = require('morgan');
+const connect = require('./config/mongodb');
 
 // Load environment variables from config.env
 dotenv.config({ path: './config/config.env' });
@@ -31,6 +32,7 @@ app.use(cors());
 const port = process.env.PORT || 8000
 const server = app.listen(port, () => {
   console.log(`Server listening on port ${port} in ${process.env.NODE_ENVIRONMENT} mode.`.yellow.bold);
+  connect();
 });
 
 // Handle unhandled promise rejections
