@@ -5,6 +5,7 @@ const colors = require('colors');
 const cors = require('cors');
 const morgan = require('morgan');
 const connect = require('./config/mongodb');
+const cookieParser = require('cookie-parser');
 
 // Load environment variables from config.env
 dotenv.config({ path: './config/config.env' });
@@ -14,7 +15,7 @@ const app = express();
 
 // Declare any middleware used throughout the API
 // Dev logging middleware for development environment
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENVIRONMENT === 'development') {
   app.use(morgan('dev'));
 }
 
@@ -24,9 +25,18 @@ app.use(express.json());
 // Cors
 app.use(cors());
 
+// Cookie parser
+app.use(cookieParser());
+
 // Import routes
+const authRoutes = require('./routes/auth');
+const dealershipRoutes = require('./routes/dealerships');
+const vehicleRoutes = require('./routes/vehicles');
 
 // Mount routes to the server
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/dealerships', dealershipRoutes);
+app.use('/api/v1/vehicles', vehicleRoutes);
 
 // Set the port and start the server
 const port = process.env.PORT || 8000
