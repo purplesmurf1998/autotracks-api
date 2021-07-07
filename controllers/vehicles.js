@@ -17,7 +17,6 @@ exports.getVehicles = AsyncHandler(async (req, res, next) => {
   let queryStr = JSON.stringify(reqQuery);
   queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
   query = Vehicle.find(JSON.parse(queryStr));
-  console.log(JSON.parse(queryStr));
   // select fields
   if (req.query.select) {
     const fields = req.query.select.split(',').join(' ');
