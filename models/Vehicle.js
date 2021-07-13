@@ -5,11 +5,11 @@ const VehicleSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  isSold: {
+  sold: {
     type: Boolean,
     default: false
   },
-  isDelivered: {
+  delivered: {
     type: Boolean,
     default: false
   },
@@ -22,19 +22,11 @@ const VehicleSchema = new mongoose.Schema({
     ref: 'Dealership',
     required: [true, 'Vehicle must be property of a dealership']
   },
-  model: String,
-  intColor: String,
-  extColor: String,
-  options: [String],
-  orderNumber: String,
-  serialNumber: String,
-  stockNumber: String,
-  arrivedAt: Date,
-  inServiceSince: Date,
-  outOfServiceSince: Date,
-  warrantyStart: Date,
-  km: Number,
-  kos: String
+  location: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Location'
+  },
+  properties: {}
 });
 
 module.exports = mongoose.model('Vehicle', VehicleSchema);

@@ -32,11 +32,13 @@ app.use(cookieParser());
 const authRoutes = require('./routes/auth');
 const dealershipRoutes = require('./routes/dealerships');
 const vehicleRoutes = require('./routes/vehicles');
+const locationRoutes = require('./routes/locations');
 
 // Mount routes to the server
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/dealerships', dealershipRoutes);
 app.use('/api/v1/vehicles', vehicleRoutes);
+app.use('/api/v1/locations', locationRoutes);
 
 // Set the port and start the server
 const port = process.env.PORT || 8000
