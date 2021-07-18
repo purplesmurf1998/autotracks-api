@@ -6,14 +6,14 @@ const VehiclePropertyModelSchema = new mongoose.Schema({
     ref: 'Dealership',
     required: [true, 'Vehicle property model must be associated to a dealership']
   },
-  text: {
+  headerName: {
     type: String,
-    required: [true, 'Vehicle property must have a title']
+    required: [true, 'Vehicle property must have a header name']
   },
-  dataField: {
+  field: {
     type: String,
-    required: [true, 'Vehicle property must have a data name'],
-    unique: [true, 'Vehicle property datafield must be unique']
+    required: [true, 'Vehicle property must have a data field name'],
+    unique: [true, 'Vehicle property data field must be unique']
   },
   inputType: {
     type: String,
@@ -26,6 +26,14 @@ const VehiclePropertyModelSchema = new mongoose.Schema({
     default: true
   },
   inventoryList: {
+    type: Boolean,
+    default: true
+  },
+  position: {
+    type: Number,
+    required: [true, 'Vehicle property model must have a position']
+  },
+  isRequired: {
     type: Boolean,
     default: true
   }
