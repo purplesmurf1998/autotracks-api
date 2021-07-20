@@ -12,12 +12,11 @@ const VehiclePropertyModelSchema = new mongoose.Schema({
   },
   field: {
     type: String,
-    required: [true, 'Vehicle property must have a data field name'],
     unique: [true, 'Vehicle property data field must be unique']
   },
   inputType: {
     type: String,
-    enum: ['Text', 'Currency', 'Date', 'Option', 'List'],
+    enum: ['Text', 'Currency', 'Date', 'Options', 'List'],
     required: [true, 'Vehicle property must have an input type']
   },
   options: [String],
@@ -37,6 +36,16 @@ const VehiclePropertyModelSchema = new mongoose.Schema({
     type: Boolean,
     default: true
   }
+});
+
+// Create the field from the headerName
+VehiclePropertyModelSchema.pre('save', async function (next) {
+  // create field
+  this.field = this.headerName.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+    if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+    return index === 0 ? match.toLowerCase() : match.toUpperCase();
+  });;
+  next();
 });
 
 module.exports = mongoose.model('VehiclePropertyModel', VehiclePropertyModelSchema);

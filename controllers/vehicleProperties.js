@@ -29,6 +29,9 @@ exports.getVehiclePropertyModels = AsyncHandler(async (req, res, next) => {
 // @route       POST /api/v1/vehicles/properties/models
 // @access      Private
 exports.createVehiclePropertyModel = AsyncHandler(async (req, res, next) => {
+  const numProperties = await VehiclePropertyModel.find({ dealership: req.body.dealership });
+  const position = numProperties.length + 1;
+  req.body.position = position;
   const newVehicleProperty = await VehiclePropertyModel.create(req.body);
 
   res.status(200).json({ success: true, vehiclePropertyModel: newVehicleProperty })
@@ -63,6 +66,8 @@ exports.deleteVehiclePropertyModel = AsyncHandler(async (req, res, next) => {
   }
   // delete vehicle
   vehicleProperty.remove();
+  // cascade positions for every property above the deleted property
+  
   // return data
   res.status(200).json({ success: true, data: {} });
 });
