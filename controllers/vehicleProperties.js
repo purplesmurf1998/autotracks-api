@@ -64,10 +64,16 @@ exports.deleteVehiclePropertyModel = AsyncHandler(async (req, res, next) => {
   if (!vehicleProperty) {
     return next(new ErrorResponse(`Vehicle property not found with id ${req.params.modelId}`, 404));
   }
+  const dealershipId = vehicleProperty.dealership;
+  const oldPosition = vehicleProperty.position;
   // delete vehicle
   vehicleProperty.remove();
   // cascade positions for every property above the deleted property
-  
+  const cascadeProperties = await VehiclePropertyModel.find({ dealership: dealershipId, position: { $gt: oldPosition } }).sort('position');
+  cascadeProperties.forEach(property => {
+    property.position = property.position - 1;
+    property.save();
+  })
   // return data
   res.status(200).json({ success: true, data: {} });
 });
