@@ -6,6 +6,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const connect = require('./config/mongodb');
 const cookieParser = require('cookie-parser');
+const boolParser = require('express-query-boolean');
 
 // Load environment variables from config.env
 dotenv.config({ path: './config/config.env' });
@@ -21,6 +22,9 @@ if (process.env.NODE_ENVIRONMENT === 'development') {
 
 // Body parser
 app.use(express.json());
+
+// Boolean parser
+app.use(boolParser())
 
 // Cors
 app.use(cors());

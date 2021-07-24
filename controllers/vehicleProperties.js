@@ -6,8 +6,13 @@ const VehiclePropertyModel = require('../models/VehiclePropertyModel')
 // @route       GET /api/v1/dealerships/:dealershipId/vehicles/properties/models
 // @access      Private
 exports.getVehiclePropertyModels = AsyncHandler(async (req, res, next) => {
-  // build query
-  let query = VehiclePropertyModel.find({ dealership: req.query.dealershipId });
+  // copy req.query
+  const reqQuery = { ...req.query };
+  // fields to exclude from filtering;
+  const removeFields = ['select', 'sort', 'page', 'limit'];
+  // loop over fields to remove them from reqQuery
+  removeFields.forEach(param => delete reqQuery[param]);
+  let query = VehiclePropertyModel.find(reqQuery);
   // sort results
   if (req.query.sort) {
     const sortBy = req.query.sort.split(',').join(' ');
